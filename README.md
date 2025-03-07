@@ -20,11 +20,6 @@ The dataset can be accessed at:
 If you use this dataset in your research, please cite our paper:  
 
 ```
-@article{YourPaperCitation,
-  author    = {Your Name and Co-Authors},
-  title     = {Instruction Fine-tuning for Interpretable FoG Trigger Detection},
-  journal   = {Conference/Journal Name},
-  year      = {202X},
-  doi       = {DOI Link}
+@article{
 }
 ```
