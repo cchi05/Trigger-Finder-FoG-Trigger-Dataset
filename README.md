@@ -20,6 +20,5 @@ The dataset can be accessed at:
 If you use this dataset in your research, please cite our paper:  
 
 ```
-@article{
-}
+Chen Qian, Chuntian Chi, John Clapham, Jiarui Qi, Zherui Zhang, GinaMari Blackwell, Ingrid Pretzer-Aboff, Leslie Cloud, Meiyi Ma, Gang Zhou, and Huajie Shao. Trigger-Finder: A Real-Time Freezing-of-Gait Trigger Detection System Using an Instruction-Tuned Multimodal Large Language Model. CHASE 2025. DOI: https://doi.org/10.1145/3721201.3721387
 ```
