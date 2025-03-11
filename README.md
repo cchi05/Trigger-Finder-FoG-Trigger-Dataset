@@ -20,32 +20,109 @@ The FoG (Freezing of Gait) Trigger Dataset contains images annotated with potent
   This label refers to situations where the individual encounters a scenario requiring a tight turn, such as making a pivot greater than 90-degree.
   
   Example of Tight Turns:
-  
-  ![Alt text](examples/tight_turn_4.png)
+
+  <img src="examples/tight_turn_4.png" alt="Description" width="300" height="500">
   
 - **Narrow Passages**
   This label refers to scenarios where the individual passes through a confined space, such as a doorway, hallway, or between closely positioned obstacles.
   
   Example of Narrow Passages:
-  
-  ![Alt text](examples/narrow_passage_4.png)
+
+  <img src="examples/narrow_passage_4.png" alt="Description" width="300" height="500">
   
 - **Distraction**
   This label refers to situations where the individual encounters sudden visual or auditory distractions that may interrupt their walking pattern.
   
   Example of Narrow Passages:
   
-  ![Alt text](examples/distraction_4.png)
+  <img src="examples/distraction_4.png" alt="Description" width="300" height="500">
   
 - **Dual-Tasking**
   This label applies when the individual is engaged in two or more tasks simultaneously, such as opening the door and entering.
   
   Example of Dual-Tasking:
-  ![Alt text](examples/dual_tasking_3.png)
+
+  <img src="examples/dual_tasking_3.png" alt="Description" width="300" height="500">
 
 Each image is paired with ground truth labels and reasoning descriptions to facilitate research in explainable AI for FoG trigger detection. The raw images and labels can be found in the corresponding sub-folders with names indicating the location which images were captured. The entire data corpus in trainable format can be found in the all_labeled_dataset json file.
 
 ## **Files**
+This repository contains the following files. You agree to the Terms of Use for FoG-Trigger Dataset to download and use the files.
+| Files | Description | Size |
+|----------|----------|----------|
+| 0813_Campus | Segmented FoG trigger images, ground truth labels, and ground truth reasonings taken in William & Mary campus. There are 577 images taken in the first pernson's point of view. | 1.51GB |
+| 0912_Mall | Segmented FoG trigger images, ground truth labels, and ground truth reasonings taken in a dontown shopping mall. There are 1361 images taken in the first pernson's point of view. | 3.08GB |
+| 1009_Beach | Segmented FoG trigger images, ground truth labels, and ground truth reasonings taken in natural environment in a beach. There are 550 images taken in the first pernson's point of view. | 1.52GB |
+| all_labeled_data.json | JSON file containing a structured dataset designed for Freezing of Gait (FoG) trigger detection in Parkinson’s disease patients. Each entry in the dataset represents an image labeled with potential FoG triggers, accompanied by a structured conversation prompt. Structure of Each Entry: id (string): A unique identifier for each sample. image (string): The file path to the corresponding image. conversations (list of dictionaries): A structured prompt-response pair designed for LLM-based analysis.| 6.1MB |
+
+## **Instructions**
+**1. Fine-tune Model**
+
+Please follow the instructions on [MiniCPM]([https://example.com](https://github.com/OpenBMB/MiniCPM-o/tree/main?tab=readme-ov-file#efficient-inference-with-llamacpp-ollama-vllm)). We used the multimodality vision-language LLM, MiniCPM-V 2.6, as our base model.
+
+**2. Load Model**
+
+Please load the model after fine-tuning with the FoG-Trigger Dataset.
+```
+model = AutoModel.from_pretrained('MiniCPM-V-2_6', trust_remote_code=True, torch_dtype=torch.bfloat16) 
+tokenizer = AutoTokenizer.from_pretrained('MiniCPM-V-2_6', trust_remote_code=True)
+model = PeftModel.from_pretrained(
+    model,
+    path_to_adapter,
+    device_map="auto",
+    trust_remote_code=True
+).eval().to(device)
+```
+
+**3. Define Prompt**
+```
+prompt = """
+[Role]: You are a professional specializing in Parkinson's disease.
+[Objective]: Your task is to identify and describe elements in an image that correspond to specific environmental triggers: floor pattern changes, tight turn, dual-tasking, narrow passage, and distraction.
+[Input]: You will receive an image that might be seen in a First Person's POV.
+[Task]:
+Identify and list all significant elements visible in the image.
+1. Element Identification: For each specified trigger, identify any relevant elements in the image that suggest the presence of that trigger, focusing ONLY on the following triggers: floor pattern changes, tight turn, dual-tasking, narrow passage, and distraction.
+2. Description and Justification: For each element identified, describe why it corresponds to the specified trigger. Do NOT include any explanations or reasoning related to potential impacts on individuals. Focus solely on the characteristics of the image.
+
+[Output Format]: Provide your analysis in TEXT. First, list the identified triggers separated by semicolons. Then, explain the reasoning for each identified trigger, focusing exclusively on its observable characteristics in the image.
+Identified Triggers: [Identified triggers will be listed here].
+
+Explanation:
+[Your reasoning for each identified trigger will be written here. Provide a detailed explanation for each trigger, focusing ONLY on the ones identified in the image. Do NOT include any irrelevant explanations.]
+"""
+```
+
+**4. Run Model**
+```
+def run(img_path):
+    img = Image.open(img_path).convert('RGB')
+    msgs = [{'role': 'user', 'content': [img, prompt]}]
+        
+    # Start time
+    start_time = time.time()
+        
+    res = model.chat(
+        image=None,
+        msgs=msgs,
+        tokenizer=tokenizer
+    )
+        
+    # End time
+    end_time = time.time()
+        
+    # Calculate the time taken and append to the list
+    prediction_time = end_time - start_time
+        
+    dict = {
+        'image_name': img_path,
+        'response': res,
+        'prediction_time': prediction_time
+    }
+    return dict
+```
+
+```img_path``` is the path to the target raw image.
 
 ## **Download**  
 The dataset can be accessed at:  
