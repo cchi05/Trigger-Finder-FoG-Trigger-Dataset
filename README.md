@@ -14,7 +14,7 @@ The FoG (Freezing of Gait) Trigger Dataset contains images annotated with potent
   
   Example of Floor Pattern Changes:
 
-  <img src="examples/floor_pattern_changes_4.png" alt="Description" width="300" height="200">
+  <img src="examples/floor_pattern_changes_4.png" alt="Description" width="300" height="500">
 
 - **Tight Turns**
   This label refers to situations where the individual encounters a scenario requiring a tight turn, such as making a pivot greater than 90-degree.
