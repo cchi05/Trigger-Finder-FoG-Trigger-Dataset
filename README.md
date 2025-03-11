@@ -13,8 +13,8 @@ The FoG (Freezing of Gait) Trigger Dataset contains images annotated with potent
   This label refers to situations where sudden or significant changes in floor patterns occur, such as transitions from one surface type to another (e.g., carpet to tile).
   
   Example of Floor Pattern Changes:
-  
-  ![Alt text](examples/floor_pattern_changes_4.png)
+
+  <img src="examples/floor_pattern_changes_4.png" alt="Description" width="300" height="200">
 
 - **Tight Turns**
   This label refers to situations where the individual encounters a scenario requiring a tight turn, such as making a pivot greater than 90-degree.
