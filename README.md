@@ -9,11 +9,30 @@ Chen Qian, Chuntian Chi, John Clapham, Jiarui Qi, Zherui Zhang, GinaMari Blackwe
 
 ## **Description**  
 The FoG (Freezing of Gait) Trigger Dataset contains images annotated with potential triggers that may contribute to Freezing of Gait in individuals with Parkinson’s disease. The dataset includes labeled examples of five key triggers:  
-- **Floor Pattern Changes**  
-- **Tight Turns**  
-- **Narrow Passages**  
-- **Distraction**  
-- **Dual-Tasking**  
+- **Floor Pattern Changes**
+  This label refers to situations where sudden or significant changes in floor patterns occur, such as transitions from one surface type to another (e.g., carpet to tile).
+  Example of Floor Pattern Changes
+  ![Alt text](examples/floor_pattern_changes_1.pdf)
+
+- **Tight Turns**
+  This label refers to situations where the individual encounters a scenario requiring a tight turn, such as making a pivot greater than 90-degree.
+  Example of Tight Turns
+  ![Alt text](examples/tight_turn_4.png)
+  
+- **Narrow Passages**
+  This label refers to scenarios where the individual passes through a confined space, such as a doorway, hallway, or between closely positioned obstacles.
+  Example of Narrow Passages
+  ![Alt text](examples/narrow_passage_4.png)
+  
+- **Distraction**
+  This label refers to situations where the individual encounters sudden visual or auditory distractions that may interrupt their walking pattern.
+  Example of Narrow Passages
+  ![Alt text](examples/distraction_4.png)
+  
+- **Dual-Tasking**
+  This label applies when the individual is engaged in two or more tasks simultaneously, such as opening the door and entering.
+  Example of Dual-Tasking
+  ![Alt text](examples/dual-tasking_3.png)
 
 Each image is paired with ground truth labels and reasoning descriptions to facilitate research in explainable AI for FoG trigger detection. The raw images and labels can be found in the corresponding sub-folders with names indicating the location which images were captured. The entire data corpus in trainable format can be found in the all_labeled_dataset json file.
 
